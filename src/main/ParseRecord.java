@@ -46,15 +46,16 @@ class ParseRecord {
     }
 
     public List<String> parse(String record) {
+        flag = true;
         List<String> postfix = new ArrayList<>();
         Deque<String> stack = new ArrayDeque<>();
         StringTokenizer tokenizer = new StringTokenizer(record, delimiters, true);
         String prev = "";
-        String curr = "";
+        String curr;
         while (tokenizer.hasMoreTokens()) {
             curr = tokenizer.nextToken();
             if (!tokenizer.hasMoreTokens() && isOperator(curr)) {
-                System.err.println("Некорректное выражение");
+                ConsoleUtil.error("Некорректное выражение");
                 flag = false;
                 return postfix;
             }
@@ -64,11 +65,12 @@ class ParseRecord {
             if (isDelimiter(curr)) {
                 if (curr.equals("(")) {
                     stack.push(curr);
-                } else if (curr.equals(")")) {
+                }
+                else if (curr.equals(")")) {
                     while (!stack.peek().equals("(")) {
                         postfix.add(stack.pop());
                         if (stack.isEmpty()) {
-                            System.err.println("Ошибки со скобками!");
+                            ConsoleUtil.error("Ошибки со скобками!");
                             flag = false;
                             return postfix;
                         }
@@ -93,8 +95,9 @@ class ParseRecord {
         while (!stack.isEmpty()) {
             if (isOperator(stack.peek())) {
                 postfix.add(stack.pop());
-            } else {
-                System.err.println("Ошибки со скобками!");
+            }
+            else {
+                ConsoleUtil.error("Ошибки со скобками!");
                 flag = false;
                 return postfix;
             }
