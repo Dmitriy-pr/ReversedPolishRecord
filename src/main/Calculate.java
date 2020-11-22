@@ -5,6 +5,8 @@ import java.util.Deque;
 import java.util.List;
 
 public class Calculate {
+    private Calculate() {
+    }
 
     public static Double calculate(List<String> postfix) {
         try {
@@ -12,11 +14,14 @@ public class Calculate {
             for (String x : postfix) {
                 if (x.equals("+")) stack.push(stack.pop() + stack.pop());
                 else if (x.equals("-")) {
-                    Double b = stack.pop(), a = stack.pop();
+                    Double b = stack.pop();
+                    Double a = stack.pop();
                     stack.push(a - b);
-                } else if (x.equals("*")) stack.push(stack.pop() * stack.pop());
-                else if (x.equals("/")) {
-                    Double b = stack.pop(), a = stack.pop();
+                } else if (x.equals("*")) {
+                    stack.push(stack.pop() * stack.pop());
+                } else if (x.equals("/")) {
+                    Double b = stack.pop();
+                    Double a = stack.pop();
                     if (b == 0) {
                         ConsoleUtil.error("Деление на ноль!");
                         return null;

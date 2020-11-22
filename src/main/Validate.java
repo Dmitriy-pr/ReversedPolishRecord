@@ -1,15 +1,10 @@
 package main;
 
 public class Validate {
+    private Validate() {}
 
     public static boolean isCorrectRecord(String record) {
-        if (hasInvalidSymbol(record.toCharArray())) {
-            return false;
-        }
-        if (isCorrectBrackets(record.toCharArray())) {
-            return false;
-        }
-        return true;
+        return !hasInvalidSymbol(record.toCharArray()) && !isCorrectBrackets(record.toCharArray());
     }
 
     private static boolean hasInvalidSymbol(char[] chars) {
@@ -31,14 +26,10 @@ public class Validate {
         for (char inputted : chars) {
             if (inputted == '(') {
                 leftBracket++;
-            }
-            if (inputted == ')') {
+            } else if (inputted == ')') {
                 rigthBracket++;
             }
         }
-        if (leftBracket != rigthBracket) {
-            return false;
-        }
-        return true;
+        return leftBracket == rigthBracket;
     }
 }
